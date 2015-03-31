@@ -20,7 +20,7 @@
   </head>
 
   <body>
-    <div id="search-input">
+    <div id="search-input" class="row">
         <div class="input-group col-sm-offset-3 col-sm-6 offset-top">
             <input type="text" class="search-query form-control" placeholder="Search"/>
             <span class="input-group-btn">
@@ -30,6 +30,32 @@
             </span>
             </div>
         </div>
+    </div>
+
+    <div id="result" class="row col-sm-offset-3 col-sm-6">
+        <div class='offset-top'> Most Positive Tweets </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-sm-1">Sentiment</th>
+                    <th class="col-sm-5">Tweet</th>
+                </tr>
+            </thead>
+            <tbody id="table-positive">
+            </tbody>
+        </table>
+
+        <div class='offset-top'> Most Negative Tweets </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-sm-1">Sentiment</th>
+                    <th class="col-sm-5">Tweet</th>
+                </tr>
+            </thead>
+            <tbody id="table-negative">
+            </tbody>
+        </table>
     </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

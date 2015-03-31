@@ -41,7 +41,7 @@ class MainHandler(tornado.web.RequestHandler):
 
         top_n = 5
         most_negative = pairs[:top_n]
-        most_positive = pairs[-top_n:]
+        most_positive = list(reversed(pairs[-top_n:]))
 
         data = {
             'most_positive': most_positive,
@@ -49,7 +49,7 @@ class MainHandler(tornado.web.RequestHandler):
             'average': sum(sentiment)/n_tweets
         }
         
-        self.write(json.dumps(pairs))
+        self.write(json.dumps(data))
 
 application = Application()
 
