@@ -16,4 +16,4 @@ Usage
 python server.py
 ```
 
-Go to `localhost:8000` to see view the demo.
+Go to `localhost:8000` to view the demo.
