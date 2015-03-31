@@ -16,7 +16,7 @@ var populate = function(table, tweets) {
 $(document).ready(function() {
     $('.search').click(function() {
         var query = $('.search-query').val();
-        $.post('/', {'query': query}, function(data) {
+        $.post('/sentiment', {'query': query}, function(data) {
             var results = JSON.parse(data);
             populate('#table-positive', results.most_positive);
             populate('#table-negative', results.most_negative);

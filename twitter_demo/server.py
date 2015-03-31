@@ -1,9 +1,11 @@
+import json
+from collections import defaultdict
+
 import tornado.ioloop
 import tornado.web
 from TwitterSearch import TwitterSearchOrder
 import indicoio
 from pprint import pprint
-import json
 
 from twitter_demo.twitter import TwitterClient
 import twitter_demo.settings as settings
@@ -12,7 +14,8 @@ import twitter_demo.settings as settings
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/", MainHandler)
+            (r"/sentiment", SentimentHandler),
+            (r"/texttags", TextTagsHandler)
         ]
         config = {
             "template_path": settings.TEMPLATE_PATH,
@@ -21,10 +24,10 @@ class Application(tornado.web.Application):
         tornado.web.Application.__init__(self, handlers, **config)
 
 
-class MainHandler(tornado.web.RequestHandler):
+class SentimentHandler(tornado.web.RequestHandler):
 
     def get(self):
-        self.render('index.html')
+        self.render('sentiment.html')
 
     def post(self):
         query_string = self.request.body_arguments.get('query')
@@ -47,6 +50,35 @@ class MainHandler(tornado.web.RequestHandler):
             'most_positive': most_positive,
             'most_negative': most_negative,
             'average': sum(sentiment)/n_tweets
+        }
+        
+        self.write(json.dumps(data))
+
+
+class TextTagsHandler(tornado.web.RequestHandler):
+
+    def get(self):
+        self.render('texttags.html')
+
+    def post(self):
+        query_string = self.request.body_arguments.get('query')
+        query = TwitterSearchOrder()
+        query.set_keywords(query_string)
+        query.set_language('en')
+        query.set_include_entities(False)
+        results = TwitterClient.search_tweets(query)
+
+        tweets = [tweet['text'] for tweet in results['content']['statuses']]
+        tweet_results = indicoio.batch_text_tags(tweets)
+        n_tweets = float(len(tweet_results))
+        
+        scores = defaultdict(float)
+        for tweet in tweet_results:
+            for category, score in tweet.items():
+                scores[category] += score / n_tweets
+
+        data = {
+            'scores': scores
         }
         
         self.write(json.dumps(data))
