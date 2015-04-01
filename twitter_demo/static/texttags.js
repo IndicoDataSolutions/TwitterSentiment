@@ -2,7 +2,9 @@ $(document).ready(function() {
     $('.search').click(function() {
         var query = $('.search-query').val();
         $.post('/texttags', {'query': query}, function(data) {
-            var results = JSON.parse(data).scores;
+            var data = JSON.parse(data);
+            var results = data.scores;
+            $('#category').html(data.category);
 
             $('.svg-container').empty()
 
@@ -41,4 +43,10 @@ $(document).ready(function() {
             }
         })
     })
+
+    $('.search-query').keypress(function(e){
+        if (e.which == 13){//Enter key pressed
+            $('.search').click();//Trigger search button click event
+        }
+    });
 })

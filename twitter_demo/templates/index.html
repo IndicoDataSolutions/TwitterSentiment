@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Twitter Text Tags Analysis</title>
+    <title>indico api demo</title>
 
     <link rel="stylesheet" href="/static/style.css">
 
@@ -20,19 +20,14 @@
   </head>
 
   <body>
-    <div id="search-input" class="row">
-        <div class="input-group col-sm-offset-3 col-sm-6 offset-top">
-            <input type="text" class="search-query form-control" placeholder="Search"/>
-            <span class="input-group-btn">
-                <button class="btn search" type="button">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </span>
-            </div>
-        </div>
-    </div>
-    <h3 class='offset-top' style='text-align: center;'>Most Likely Category: <span id='category'></span></h3>
-    <div class="row svg-container offset-top">
+    <h1 style='text-align:center;'>indico api demo</h1>
+    <div class="offset-top" style='text-align:center;'>
+        <a href='/sentiment'>
+            <button class="btn btn-lg" type="button">Sentiment</button>
+        </a>
+        <a href='/texttags'>
+            <button class="btn btn-lg" type="button">Text Tags</button>
+        </a>
     </div>
 
     <!-- Bootstrap core JavaScript
@@ -41,10 +36,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-    <script src="/static/d3.js"></script>
-    <script src="/static/d3.layout.cloud.js"></script>
-
-    <script src="/static/texttags.js"></script>
   </body>
 </html>

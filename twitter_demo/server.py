@@ -15,13 +15,20 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/sentiment", SentimentHandler),
-            (r"/texttags", TextTagsHandler)
+            (r"/texttags", TextTagsHandler),
+            (r"/", MainHandler)
         ]
         config = {
             "template_path": settings.TEMPLATE_PATH,
             "static_path": settings.STATIC_PATH,
         }
         tornado.web.Application.__init__(self, handlers, **config)
+
+
+class MainHandler(tornado.web.RequestHandler):
+
+    def get(self):
+        self.render('index.html')
 
 
 class SentimentHandler(tornado.web.RequestHandler):
@@ -77,8 +84,11 @@ class TextTagsHandler(tornado.web.RequestHandler):
             for category, score in tweet.items():
                 scores[category] += score / n_tweets
 
+        category = max(scores, key=lambda x: scores[x])
+
         data = {
-            'scores': scores
+            'scores': scores,
+            'category': category
         }
         
         self.write(json.dumps(data))

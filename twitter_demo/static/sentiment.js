@@ -20,6 +20,13 @@ $(document).ready(function() {
             var results = JSON.parse(data);
             populate('#table-positive', results.most_positive);
             populate('#table-negative', results.most_negative);
-        })
+            $('#average').html(results.average.toFixed(2).toString());
+        });
     })
+
+    $('.search-query').keypress(function(e){
+        if (e.which == 13){//Enter key pressed
+            $('.search').click();//Trigger search button click event
+        }
+    });
 })
